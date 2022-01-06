@@ -35,6 +35,9 @@ function operate(operator, a , b){
           break;
 
         case "/":
+          if(b == "0"){
+            return a;
+          }
           return divide(a,b);
           break;
         
@@ -47,6 +50,10 @@ function operate(operator, a , b){
       } 
 }
 
+function checkDivide(){
+  if(currentOperator == "/" && displayValue == "0")
+    return true;
+}
 
 function updateDisplay(){
   document.querySelector(".display-text").textContent = displayValue;
@@ -58,9 +65,17 @@ function clearDisplay() {
 }
 
 function calculate(){
-  displayValue = operate(currentOperator, Number(memoryValue), Number(displayValue));
-  updateDisplay();
-  currentOperator = "";
+
+  if(checkDivide())
+    document.querySelector(".display-text").textContent = "Nice Math mate";
+  else{
+    displayValue = operate(currentOperator, Number(memoryValue), Number(displayValue));
+    if(displayValue.toString().includes(".")){
+      displayValue = Number(displayValue).toFixed(4);
+    }
+    updateDisplay();
+    currentOperator = "";
+  }
 }
 
 
@@ -73,6 +88,11 @@ numberButtons.forEach((button) => {
 
     // and for each one we add a 'click' listener
     button.addEventListener('click', () => {
+
+      if(currentOperator == ""){
+        clearDisplay();
+      }
+
       displayValue += button.textContent;
       updateDisplay();      
     });
@@ -82,6 +102,8 @@ numberButtons.forEach((button) => {
 const clearButton = document.querySelector("#clear-button")
 clearButton.addEventListener('click', () => {
     clearDisplay();
+    memoryValue = "";
+    currentOperator = "";
     document.querySelector(".display-text").textContent = "0";
 
 })
@@ -109,19 +131,24 @@ operatorButtons.forEach((button) => {
 
 const equalButton = document.querySelector("#equal-button")
 equalButton.addEventListener('click', () => {
+    if(displayValue == "" || currentOperator == ""){
+      document.querySelector(".display-text").textContent = "Error!";
+    }else{
     calculate();
-});
+    }
+  });
 
 
 //CHANGE SIGN button
 
 const changeSignButton = document.querySelector("#change-sign-button")
 changeSignButton.addEventListener('click', () => {
-  if(displayValue[0] != "-"){
-    displayValue = "-" + displayValue;
+  if(displayValue.toString()[0] == "-"){
+    displayValue = displayValue.toString().substring(1);
     updateDisplay();
+    
   }else{
-    displayValue = displayValue.substring(1);
+    displayValue = "-" + displayValue;
     updateDisplay();
   }
 });
