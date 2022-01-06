@@ -6,4 +6,4 @@ The odin project is a free and self-paced online bootcamp. This is the final pro
 I recieved no direct code or help outside of the project description/stackoverflow/MDN documentation. This was not a simple follow along tutorial project. I learned how to implement real javascript logic with this project. 
 
 
-The project description can be found here: https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/calculator
+The project prompt/description can be found here: https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/calculator
