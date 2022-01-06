@@ -1,6 +1,7 @@
 
 
 let displayValue = "";
+let currentValue = "";
 let memoryValue = "";
 let currentOperator = "";
 
@@ -54,7 +55,12 @@ function updateDisplay(){
 
 function clearDisplay() {
   displayValue = "";
-  document.querySelector(".display-text").textContent = 0;
+}
+
+function calculate(){
+  displayValue = operate(currentOperator, Number(memoryValue), Number(displayValue));
+  updateDisplay();
+  currentOperator = "";
 }
 
 
@@ -76,6 +82,8 @@ numberButtons.forEach((button) => {
 const clearButton = document.querySelector("#clear-button")
 clearButton.addEventListener('click', () => {
     clearDisplay();
+    document.querySelector(".display-text").textContent = "0";
+
 })
 
 //OPERATOR Buttons
@@ -83,9 +91,15 @@ clearButton.addEventListener('click', () => {
 const operatorButtons = document.querySelectorAll(".operator-button");
 operatorButtons.forEach((button) => {
   button.addEventListener('click', () => {
-    currentOperator = button.textContent;
-    memoryValue = displayValue;
-    clearDisplay();
+
+      if(currentOperator != "")
+        calculate();
+      currentOperator = button.textContent;
+      memoryValue = displayValue;
+      clearDisplay();
+    
+
+    
   })
 
 
@@ -95,12 +109,22 @@ operatorButtons.forEach((button) => {
 
 const equalButton = document.querySelector("#equal-button")
 equalButton.addEventListener('click', () => {
-  displayValue = operate(currentOperator, Number(memoryValue), Number(displayValue));
-  updateDisplay();
+    calculate();
 });
 
 
+//CHANGE SIGN button
 
+const changeSignButton = document.querySelector("#change-sign-button")
+changeSignButton.addEventListener('click', () => {
+  if(displayValue[0] != "-"){
+    displayValue = "-" + displayValue;
+    updateDisplay();
+  }else{
+    displayValue = displayValue.substring(1);
+    updateDisplay();
+  }
+});
 
 
 
