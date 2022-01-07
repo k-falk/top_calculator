@@ -89,9 +89,9 @@ numberButtons.forEach((button) => {
     // and for each one we add a 'click' listener
     button.addEventListener('click', () => {
 
-      if(currentOperator == ""){
-        clearDisplay();
-      }
+      // if(currentOperator != ""){
+      //   clearDisplay();
+      // }
 
       displayValue += button.textContent;
       updateDisplay();      
@@ -151,6 +151,19 @@ changeSignButton.addEventListener('click', () => {
     displayValue = "-" + displayValue;
     updateDisplay();
   }
+});
+
+//DECIMAL BUTTON
+
+const decimalButton = document.querySelector("#decimal-button")
+decimalButton.addEventListener('click', () => {
+    if(displayValue.includes(".")){
+      console.log("HIT!")
+      return;
+    }else{
+      displayValue+= "."
+      updateDisplay();
+    }
 });
 
 
